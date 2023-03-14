@@ -5,20 +5,42 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 </head>
 <body>
- <h1>TO DO IT</h1>
+ <h1>TO-DO IT</h1>
 
 <nav>
 	<a href=/todoit/new>Add New Task</a>
 </nav>
 
- <ul>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Task</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Location</th>
+      <th>Edit</th>
+      <th>Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for (let i = 0; i < Todo.length; i++) { %>
+      <tr>
+        <td><a href="/todoit/<%=Todo[i].id%>/edit"><%=Todo[i].task%></a></td>
+        <td><%= Todo[i].date %></td>
+        <td><%= Todo[i].time %></td>
+        <td><%= Todo[i].location %></td>
+        <td><a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a></td>
+        <td>
+          <form action="/todoit/<%=Todo[i].id%>" method="POST">
+            <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% } %>
+  </tbody>
+</table>
 
-<% for (var i = 0; i < Todo.length; i++) { %>
-  <h2><%= Todo[i].task %></h2>
-  <p><%= Todo[i].location %> on <%= Todo[i].date %> at <%= Todo[i].time %></p>
-<% } %>
-
-</ul>
 
 
 </body>

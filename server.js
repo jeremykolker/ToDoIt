@@ -1,6 +1,7 @@
 // server.js
 const express = require('express')
 const mongoose = require('mongoose')
+const methodOverride = require('method-override')
 const Todoit = require('./models/schema.js')
 const Todo = require("./models/seed.js")
 const port = 3000
@@ -8,6 +9,7 @@ const mongoURI = 'mongodb://localhost:27017/todo'
 const app = express()
 
 app.use(express.urlencoded({extended: true}))
+app.use(methodOverride('_method'))
 app.set('view engine', 'ejs')
 app.use(express.static('public'))
 
@@ -32,6 +34,23 @@ app.get("/todoit/new", (req, res) => {
   res.render("new.ejs");
 });
 
+
+app.get("/todoit/:id/edit", (req, res) => {
+      Todoit.findById(req.params.id).then((todos) => {
+        res.render("edit.ejs/", {
+          Todo: todos
+        })
+      })
+    })
+
+
+
+      
+      
+      
+    
+
+
 // CREATE ROUTE WITH REDIRECT TO INDEX
 app.post("/todoit", (req, res) => {
   Todoit.create(req.body)
@@ -45,12 +64,12 @@ app.post("/todoit", (req, res) => {
 });
 
 // SEED DATA TO MONGO \\
-Todoit.insertMany(Todo)
-  .then((docs) => {
-    console.log("data seeded");
-  }).catch((err) => {
-    console.error(err);
-  });
+// Todoit.insertMany(Todo)
+//   .then((docs) => {
+//     console.log("data seeded, mongo connection established");
+//   }).catch((err) => {
+//     console.error(err);
+//   });
 
 
 app.listen(port, () => {
