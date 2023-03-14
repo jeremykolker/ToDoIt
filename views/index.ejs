@@ -25,23 +25,21 @@
   <tbody>
     <% for (let i = 0; i < Todo.length; i++) { %>
       <tr>
-        <td><a href="/todoit/<%=Todo[i].id%>/edit"><%=Todo[i].task%></a></td>
+        <td><% if (Todo[i].completed) { %><span class="text-success">&#10003;</span><% } %> <a href="/todoit/<%=Todo[i].id%>/edit"><%=Todo[i].task%></a></td>
         <td><%= Todo[i].date %></td>
         <td><%= Todo[i].time %></td>
         <td><%= Todo[i].location %></td>
         <td><a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a></td>
         <td>
-          <form action="/todoit/<%=Todo[i].id%>" method="POST">
-            <input type="hidden" name="_method" value="DELETE">
+          <form action="/todoit/<%=Todo[i]._id%>?_method=DELETE" method="POST">
             <button class="btn btn-danger" type="submit">Delete</button>
           </form>
+          
         </td>
       </tr>
     <% } %>
   </tbody>
 </table>
-
-
 
 </body>
 </html>

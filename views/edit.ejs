@@ -8,8 +8,12 @@
   <nav>
     <a href="/todoit/">Back to To-Do List</a>
   </nav>
+</br> 
 
   <h1>Edit To-Do Task</h1>
+
+</br> 
+
 
   <form action="/todoit/<%= Todo.id %>?_method=PUT" method="POST">
     <div>
@@ -22,11 +26,11 @@
     </div>
     <div>
       <label for="location">Task:</label>
-      <input type="text" name="location" id="location" value="<%= Todo.location %>">
+      <input type="text" name="task" id="location" value="<%= Todo.task %>">
     </div>
     <div>
       <label for="task">Location:</label>
-      <input type="text" name="task" id="task" value="<%= Todo.task %>">
+      <input type="text" name="location" id="task" value="<%= Todo.location%>">
     </div>
     <div>
       <label for="completed">Completed:</label>
@@ -34,6 +38,8 @@
     </div>
     <button type="submit">Update Task</button>
   </form>
+
+  
 
 </body>
 </html>
