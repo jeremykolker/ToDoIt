@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create New Todo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+</head>
+<body>
+ 
+    <h1>Add To-Do Task</h1>
+    <form action="/todoit" method="POST">
+  <!-- // form action says “when you’re at the url”... -->
+  <!-- //POST says “add the info to the database” -->
+      Date: <input type="text" name="date">
+      Time: <input type="text" name="time">
+      Task: <input type="text" name="location">
+      Location: <input type="text" name="task">   
+      Completed: <input type="checkbox" name="task complete">
+      <input type="submit" value="Submit New Task">
+  <!-- //the value for the submit button is what will show on the button -->
+    </form>
+  
+  </div>
+</body>
+</html>
