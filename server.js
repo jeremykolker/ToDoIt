@@ -13,14 +13,9 @@ app.use(express.static('public'))
 
 // Connect to the MongoDB database
 mongoose.connect(mongoURI)
-  .then(() => {
-    console.log("Connected to MongoDB successfully.");
-  })
-  .catch(err => {
-    console.error("Failed to connect to MongoDB.", err);
-  });
+ 
 
-// Render the index page
+// INDEX PAGE RENDERED
 app.get("/todoit", (req, res) => {
   Todoit.find({})
     .then((todos) => {
@@ -28,16 +23,16 @@ app.get("/todoit", (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Internal server error");
+      res.status(500).send("error");
     });
 });
 
-// Render the create page
+// CREATE TASK ITEM PAGE ROUTE 
 app.get("/todoit/new", (req, res) => {
   res.render("new.ejs");
 });
 
-// Create a new Todo item
+// CREATE ROUTE WITH REDIRECT TO INDEX
 app.post("/todoit", (req, res) => {
   Todoit.create(req.body)
     .then(() => {
@@ -45,22 +40,21 @@ app.post("/todoit", (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Internal server error");
+      res.status(500).send("error");
     });
 });
 
-// Seed the database with initial data
+// SEED DATA TO MONGO \\
 Todoit.insertMany(Todo)
   .then((docs) => {
-    console.log(docs.length + " documents inserted.");
-  })
-  .catch((err) => {
+    console.log("data seeded");
+  }).catch((err) => {
     console.error(err);
   });
 
-// Start the server
+
 app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+  console.log("listening");
 });
 
 
