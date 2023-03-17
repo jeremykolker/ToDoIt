@@ -16,7 +16,14 @@
 </style>
 <body>
 
-
+<nav class="navbar navbar-light bg-light-primary fixed-bottom">
+  <div class="d-flex justify-content-end">
+    <form class="form-inline">
+      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search Tasks..." aria-label="Search">
+      <button class="btn btn-outline-light my-2 my-sm-0 text-blue" type="submit">Search</button>
+    </form>
+  </div>
+</nav>
 
   <!-- TOGGLE MENU IDEA -->
   <div class="dropdown" style="padding: 10px; margin: 5px;">
@@ -76,36 +83,24 @@
         <td><%= Todo[i].task %></td>
         <td><%= Todo[i].location %></td>
         
-    
-        <td>
-          <a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a>
-        </td>
-
+        <td><a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a></td>
         <td>
           
-            <form action="/todoit/<%=Todo[i]._id%>?_method=DELETE" method="POST">
-              <button class="btn btn-danger" type="submit">Delete</button>
-            </form>
-          </td>
-        
+          <form action="/todoit/<%=Todo[i]._id%>?_method=DELETE" method="POST">
+            <button class="btn btn-danger" type="submit">Delete</button>
+          </form>
+          
+        </td>
       </tr>
-      <% } %>
+    <% } %>
   </tbody>
- 
 </table>
-</div>
 
-<nav class="navbar navbar-light bg-light-primary fixed-bottom">
-  <div class="d-flex justify-content-end">
-    <form class="form-inline">
-      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search Tasks..." aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0 text-blue" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
+
 
 <script>
 $(document).ready(function() {
+  
   // Toggle dropdown menu on click \\
   $('.dropdown-toggle').click(function() {
     $('.dropdown-menu').toggle();
@@ -118,31 +113,14 @@ $(document).ready(function() {
     }
   });
 
-  // Search for tasks \\
-  $('form').submit(function(event) {
-    event.preventDefault();
-    var query = $('input').val().toLowerCase();
-    $('tbody tr').each(function() {
-      var task = $(this).find('td:eq(3)').text().toLowerCase();
-      if (task.indexOf(query) !== -1 || query.length === 0) {
-        $(this).show();
-      } else {
-        $(this).hide();
-      }
-    });
-  });
-
-  // Show all tasks when the search input is cleared \\
-  $('input').on('input', function() {
-    if ($(this).val().length === 0) {
-      $('tbody tr').show();
-    }
-  });
+  
 });
 
 
 
+
 </script>
+
 </div>
 
 
