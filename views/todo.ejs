@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>To-Do List for <%= date.toDateString() %></title>
+  </head>
+  <body>
+    <h1>To-Do List for <%= date.toDateString() %></h1>
+    <ul>
+      <% for (let i = 0; i < todoList.length; i++) { %>
+        <li><%= todoList[i] %></li>
+      <% } %>
+    </ul>
+    <form method="POST" action="/todoit/calendar">
+      <input type="hidden" name="date" value="<%= date.toISOString() %>">
+      <input type="text" name="todo">
+      <button type="submit">Add to List</button>
+    </form>
+  </body>
+</html>
