@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js" integrity="sha256-pvPw+upLPUjgMXY0G+8O0xUf+/Im1MZjXxxgOcBQBXU=" crossorigin="anonymous"></script>
-    <script src="calendar.ejs"></script>
   </head>`
   <style>
     body {
@@ -26,10 +25,10 @@
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" href="./">Home</a>
+            <a class="nav-link" href="/todoit/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="./calendar/">View Calendar 🗓️</a>
+            <a class="nav-link" href="/todoit/calendar/">View Calendar 🗓️</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/todoit/new/">Add To-Do/Create Task</a>
@@ -40,28 +39,26 @@
   </nav>
   
   
-      
-
 </div>
+
     
       
     
     <div style="background-color: aliceblue; margin: 60px 80px 10px 80px">
-    <div class="container-fluid" style="padding-bottom: 10px; border-style: solid; border-color: silver;">
-      <h1 class="text-left my-5">My Calendar</h1>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-6">
-                  <h5 id="current-date"></h5>
-                </div>
-                <div class="col-6">
-                  <h5 style="position: fixed; border-style: solid; text-align: center; background-color: paleturquoise;border-color: silver ; opacity: 70%;"><a href="/todoit/new/"><small class="">Add To-Do/New Task</small></a></h5>
-                </div>
-              </div>
-            </div>
-      <div class="row">
-        <div class="col-12">
-          <table class="table table-bordered">
+      <div class="container-fluid" style="padding-bottom: 10px; border-style: solid; border-color: silver;">
+        <h1 class="text-left my-5">My Calendar</h1>
+        <div class="row">
+          <div class="col-6">
+            <h5 id="current-date"></h5>
+          </div>
+          <div class="col-6 text-right">
+            <h5 style="float: right; border-style: solid; background-color: paleturquoise; border-color: silver; opacity: 70%;"><a href="/todoit/new/"><small>Add To-Do/New Task</small></a></h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <table class="table table-bordered">
+              <thead>
             <thead>
         
             </thead>
@@ -100,55 +97,53 @@
 
 $(() => {
   function generateCalendar(year, month, day) {
-    // GET THE NUMBER OF DAYS IN A MONTH
-    let numDays = new Date(year, month + 1, 0).getDate();
-  
-    // Get the index of the first day of the month (0 for Sunday, 1 for Monday, etc.)
-    let firstDayIndex = new Date(year, month, 1).getDay();
-  
-    // Create an array of empty cells for the days before the first day of the month
-    let emptyCells = Array(firstDayIndex).fill('');
-  
-    // Create an array of cells for the days of the months
-    let dayCells = Array.from({ length: numDays }, (_, i) => i + 1);
-  
-    // Combine the arrays of empty cells and day cells into a single array
-    let cells = [...emptyCells, ...dayCells];
-  
-    // Create an array of rows, each containing 7 cells
-    let rows = cells.reduce((acc, cell, i) => {
-      if (i % 7 === 0) {
-        acc.push([]);
-      }
-      acc[acc.length - 1].push(cell);
-      return acc;
-    }, []);
-  
-    // Render the rows as HTML
-    let html = rows.map(row => {
-      return `<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`;
-    }).join('');
-  
-    // Set the HTML of the calendar body
-    $('#calendar-body').html(html);
-  
-    // Set the formatted date as the content of the #current-date element
-    let date = new Date(year, month, day);
-    let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-    let dateString = date.toLocaleDateString('en-US', options);
-    $('#current-date').text(dateString);
+  // GET THE NUMBER OF DAYS IN A MONTH \\
+  let numDays = new Date(year, month + 1, 0).getDate();
 
-  
-    // Set the formatted time as the content of the #current-time element
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let ampm = hours >= 12 ? 'PM' : 'AM';
-    hours = hours % 12;
-    hours = hours ? hours : 12; // the hour '0' should be '12'
-    minutes = minutes < 10 ? '0' + minutes : minutes;
-    let formattedTime = hours + ':' + minutes + ' ' + ampm;
-    $('#current-time').text(formattedTime);
-  }
+  // Get the index of the first day of the month (0 for Sunday, 1 for Monday, etc.) \\
+  let firstDayIndex = new Date(year, month, 1).getDay();
+
+  // Create an array of empty cells for the days before the first day of the month \\
+  let emptyCells = Array(firstDayIndex).fill('');
+
+  // Create an array of cells for the days of the month \\
+  let dayCells = Array.from({ length: numDays }, (_, i) => i + 1);
+
+  // Combine the arrays of empty cells and day cells into a single array \\
+  let cells = [...emptyCells, ...dayCells];
+
+  // Create an array of rows, each containing 7 cells \\
+  let rows = cells.reduce((acc, cell, i) => {
+    if (i % 7 === 0) {
+      acc.push([]);
+    }
+    acc[acc.length - 1].push(cell);
+    return acc;
+  }, []);
+
+  // Render the rows \\
+  let html = rows.map(row => {
+    return `<tr>${row.map(cell => `<td><a href="/todoit/calendar/${year}-${month + 1}-${cell}/">${cell}</a></td>`).join('')}</tr>`;
+  }).join('');
+
+  // Set the calendar body to html \\
+  $('#calendar-body').html(html);
+
+  // Format and set current-date/current-time \\
+  let date = new Date(year, month, day);
+  let options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  let dateString = date.toLocaleDateString('en-US', options);
+  $('#current-date').text(dateString);
+  let hours = date.getHours();
+  let minutes = date.getMinutes();
+  let ampm = hours >= 12 ? 'PM' : 'AM';
+  hours = hours % 12;
+  hours = hours ? hours : 12; // the hour '0' should be '12'
+  minutes = minutes < 10 ? '0' + minutes : minutes;
+  let formattedTime = hours + ':' + minutes + ' ' + ampm;
+  $('#current-time').text(formattedTime);
+}
+
   
   // GENERATE THE CALENDAR WHEN THE PAGE LOADS \\
   let currentDate = new Date();
@@ -163,7 +158,7 @@ $(() => {
     generateCalendar(year, month, day);
   });
   
-  // NEXT DAY BUTTON
+  // NEXT DAY BUTTON \\
   $('#next-day-btn').click(function() {
     currentDate.setDate(currentDate.getDate() + 1);
     let year = currentDate.getFullYear();
@@ -173,6 +168,7 @@ $(() => {
   });
 });
 
-    </script>      
+    </script>     
+    	
     </body>
 </html>

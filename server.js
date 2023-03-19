@@ -26,17 +26,11 @@ app.get("/todoit", (req, res) => {
     });
 });
 
-
-
 // NEW TASK ITEM ROUTE \\ 
 app.get("/todoit/new", (req, res) => {
   res.render("new.ejs");
 });
 
-// CALENDAR ROUTE \\
-app.get("/todoit/calendar", (req, res) => {
-  res.render("calendar.ejs");
-})
 
 // EDIT ROUTE \\
 app.get("/todoit/:id/edit", (req, res) => {
@@ -47,7 +41,33 @@ app.get("/todoit/:id/edit", (req, res) => {
   });
 });
 
+// CALENDAR ROUTE \\
+app.get("/todoit/calendar", (req, res) => {
+  res.render("calendar.ejs");
+})
 
+// SEARCH FUNCTION ROUTE \\
+app.get("/todoit/search/", (req, res) => {
+  const query = req.query.q;
+  console.log("Search query: ", query); //
+  Todoit.find({ task: { $regex: new RegExp(query, "i") } })
+    .then((todos) => {
+      res.render("index.ejs", { Todo: todos, query: query });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("error");
+    });
+});
+
+// DATE Route \\
+app.get('/todoit/calendar/:date', function(req, res) {
+  const date = req.params.date;
+  res.render('day.ejs', { date: date });
+});
+
+
+// COMPLETED TASKS CHECK BOX ROUTE \\
 app.put("/todoit/:id", (req, res) => {
   Todoit.findByIdAndUpdate(
     req.params.id, // find the Todo item to update by ID
@@ -64,7 +84,8 @@ app.put("/todoit/:id", (req, res) => {
   });
 });
 
-//  POST ROUTE WITH REDIRECT TO INDEX
+
+//  POST ROUTE WITH REDIRECT TO INDEX \\
 app.post("/todoit", (req, res) => {
   Todoit.create(req.body)
     .then(() => {

@@ -15,17 +15,9 @@
   }
 </style>
 <body>
+ 
 
-<nav class="navbar navbar-light bg-light-primary fixed-bottom">
-  <div class="d-flex justify-content-end">
-    <form class="form-inline">
-      <input id="searchInput" class="form-control mr-sm-2" type="search" placeholder="Search Tasks..." aria-label="Search">
-      <button class="btn btn-outline-light my-2 my-sm-0 text-blue" type="submit">Search</button>
-    </form>
-  </div>
-</nav>
-
-  <!-- TOGGLE MENU IDEA -->
+  <!-- TOGGLE MENU -->
   <div class="dropdown" style="padding: 10px; margin: 5px;">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
       ☰
@@ -46,8 +38,17 @@
     </div>
   </div>
 
-  </br>
+</br>
 
+  <nav class="navbar navbar-light bg-light-primary fixed-bottom">
+    <div class="d-flex justify-content-end">
+      <form id="searchForm" class="form-inline" method="GET" action="/todoit/">
+        <input id="searchInput" class="form-control mr-sm-2" type="search" name="q" placeholder="Search Tasks..." aria-label="Search">
+        <button class="btn btn-outline-light my-2 my-sm-0 text-blue" type="submit">Search Tasks...</button>
+      </form>
+    </div>
+  </nav>
+  
   <div class="container">
     <div style="background-color: ghostwhite"> 
       <div style="border-style: solid;">
@@ -75,28 +76,59 @@
                     <span class="text-success">&#10003;</span>
                   <% } else { %>
                     &nbsp;
-                    
                   <% } %>
-        </td>
-        <td><%= Todo[i].date %></td>
-        <td><%= Todo[i].time %></td>
-        <td><%= Todo[i].task %></td>
-        <td><%= Todo[i].location %></td>
-        
-        <td><a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a></td>
-        <td>
-          
-          <form action="/todoit/<%=Todo[i]._id%>?_method=DELETE" method="POST">
-            <button class="btn btn-danger" type="submit">Delete</button>
-          </form>
-          
-        </td>
-      </tr>
-    <% } %>
-  </tbody>
-</table>
+                </td>
+                <td><%= Todo[i].date %></td>
+                <td><%= Todo[i].time %></td>
+                <td><%= Todo[i].task %></td>
+                <td><%= Todo[i].location %></td>
+                <td><a class="btn btn-primary" href="/todoit/<%=Todo[i].id%>/edit">Edit</a></td>
+                <td>
+                  <form action="/todoit/<%=Todo[i]._id%>?_method=DELETE" method="POST">
+                    <button class="btn btn-danger" type="submit">Delete</button>
+                  </form>
+                </td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+ $(document).ready(function() {
+  $("#searchForm").submit(function(event) {
+    event.preventDefault();
 
+    // Get search query \\
+    let query = $("#searchInput").val().toLowerCase();
 
+    // Loop through rows and show/hide based on search query \\
+    $("#tableBody tr").each(function() {
+      // Get row text and check if it contains the search query \\
+      let rowText = $(this).text().toLowerCase();
+      let containsQuery = rowText.indexOf(query) !== -1;
+
+      // Show/hide row based on search \\
+      if (containsQuery) {
+        $(this).show();
+      } else {
+        $(this).hide();
+      }
+    });
+  });
+
+  // Show full table when search field is cleared \\
+  $("#searchInput").on("input", function() {
+    if ($(this).val() === "") {
+      $("#tableBody tr").show();
+    }
+  });
+});
+
+  </script>
+  
 
 <script>
 $(document).ready(function() {
@@ -112,19 +144,8 @@ $(document).ready(function() {
       $('.dropdown-menu').hide();
     }
   });
-
-  
 });
-
-
-
-
 </script>
-
-</div>
-
-
-
 
 </body>
 
