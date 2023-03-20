@@ -14,7 +14,7 @@ app.use(methodOverride('_method'))
 
 mongoose.connect(mongoURI)
 
-// INDEX PAGE RENDERED
+// INDEX PAGE RENDERED \\
 app.get("/todoit", (req, res) => {
   Todoit.find({})
     .then((todos) => {
@@ -70,17 +70,17 @@ app.get('/todoit/calendar/:date', function(req, res) {
 // COMPLETED TASKS CHECK BOX ROUTE \\
 app.put("/todoit/:id", (req, res) => {
   Todoit.findByIdAndUpdate(
-    req.params.id, // find the Todo item to update by ID
+    req.params.id, // FIND THE ITEM YOU WANT TO EDIT BY ID \\
     {
       date: req.body.date,
       time: req.body.time,
       location: req.body.location,
       task: req.body.task,
-      completed: req.body.completed === "on" // checkbox value is "on" if checked
+      completed: req.body.completed === "on" // CHECKBOX MARKED  EQUALS VALUE OF ON
     },
-    { new: true } // return the updated Todo item in the response
+    { new: true } // RETURN UPDATED TO-DO \\
   ).then((updatedTodo) => {
-    res.redirect("/todoit"); // redirect to the index page after update
+    res.redirect("/todoit"); 
   });
 });
 
@@ -118,7 +118,7 @@ app.listen(port, () => {
 
 
 
-
+// ORIGINAL SEED ROUTE \\
 // SEED DATA TO MONGO \\
 // Todoit.insertMany(Todo)
 //   .then((docs) => {

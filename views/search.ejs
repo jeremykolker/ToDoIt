@@ -108,30 +108,6 @@
 
 </div>
 
-<script>
-$(document).ready(function() {
-  
-  // Toggle dropdown menu on click \\
-  $('.dropdown-toggle').click(function() {
-    $('.dropdown-menu').toggle();
-  });
-
-  // Hide dropdown menu when clicking elsewhere \\
-  $(document).click(function(e) {
-    if (!$(e.target).is('.dropdown-toggle') && !$(e.target).parents().is('.dropdown-toggle')) {
-      $('.dropdown-menu').hide();
-    }
-  });
-});
-</script>
-
-
-  
-
-
-
-
-
 </body>
 
 </html>

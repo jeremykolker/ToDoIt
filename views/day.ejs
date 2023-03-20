@@ -43,7 +43,8 @@
   </nav>
 </br> 
 <div class="col text-center">	
-<h2>YOUR TO-DOs FOR <span class="text-primary"><%= date %></span></h2>
+  <h2>Your TO-DOs For: <span class="text-primary"><%= new Date(date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) %></span></h2>
+
 </div>
 
 

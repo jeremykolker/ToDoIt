@@ -18,10 +18,9 @@
 
   <h1>Edit To-Do Task</h1>
 
-
+<!-- EDIT TASK FORM -->
 
 <div style="padding: 10px">
-
   <form action="/todoit/<%= Todo.id %>?_method=PUT" method="POST">  
     <div>
       <label for="date">Date:</label>
@@ -39,7 +38,6 @@
       <label for="task">Location:</label>
       <input type="text" name="location" id="location" class= "form-control" value="<%= Todo.location %>">
     </div>
- 
     
   </br> 
     <div>

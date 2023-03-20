@@ -1,3 +1,4 @@
+<!-- INDEX PAGE -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,13 +12,14 @@
     color: greenyellow;
   }
   body {
-    background-color: paleturquoise;
+  background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(175,238,224,0.6815764925373134) 50%, rgba(0,212,255,1) 100%);
   }
 </style>
 <body>
  
+  <!-- COLLAPSING TOGGLE MENU NAV -->
 
-  <!-- TOGGLE MENU -->
   <div class="dropdown" style="padding: 10px; margin: 5px;">
     <a class="btn btn-secondary dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
       ☰
@@ -28,7 +30,7 @@
       <a class="dropdown-item" href="/todoit/new">Add To-Do/Create Task</a>
     </div>
   </div>
-
+<!-- CREATE NEW TASK LINK -->
   <div style="background-color: ghostwhite; margin: 40px 100px 10px 100px">
     <div style="text-align: center;">
       <div style="border-style: solid;box-shadow: 1px 0px 1px 1px;">
@@ -39,7 +41,7 @@
   </div>
 
 </br>
-
+<!-- SEARCH BAR -->
   <nav class="navbar navbar-light bg-light-primary fixed-bottom">
     <div class="d-flex justify-content-end">
       <form id="searchForm" class="form-inline" method="GET" action="/todoit/">
@@ -48,7 +50,7 @@
       </form>
     </div>
   </nav>
-  
+  <!-- TO-DO TASK TABLE -->
   <div class="container">
     <div style="background-color: ghostwhite"> 
       <div style="border-style: solid;">
@@ -56,7 +58,7 @@
           <div class="text-center"> 
           </div>
         </div>
-        <table class="table table-striped">
+        <table class="table table-striped table-responsive">
           <thead>
             <tr>
               <th></th>
@@ -96,20 +98,20 @@
     </div>
   </div>
   
+  <!-- SEARCH FUNCTION -->
   <script>
- $(document).ready(function() {
+$(() =>  {
   $("#searchForm").submit(function(event) {
     event.preventDefault();
 
-    // Get search query \\
+    // MAKE A SEARCH QUERY \\
     let query = $("#searchInput").val().toLowerCase();
 
-    // Loop through rows and show/hide based on search query \\
+    //  LOOP THROUGH EACH TASK ROW, SHOW/GUDE BASED ON SEARCH
     $("#tableBody tr").each(function() {
       // Get row text and check if it contains the search query \\
       let rowText = $(this).text().toLowerCase();
       let containsQuery = rowText.indexOf(query) !== -1;
-
       // Show/hide row based on search \\
       if (containsQuery) {
         $(this).show();
@@ -118,27 +120,24 @@
       }
     });
   });
-
-  // Show full table when search field is cleared \\
+  // SHOW ALL WHEN SEARCH FIELD IS CLEARED \\
   $("#searchInput").on("input", function() {
     if ($(this).val() === "") {
       $("#tableBody tr").show();
     }
   });
 });
-
-  </script>
+</script>
   
-
+<!-- TOGGLE DROPDOWN MENU -->
 <script>
-$(document).ready(function() {
-  
-  // Toggle dropdown menu on click \\
+$(() => {
+  // TOGGLE MENU DROPDOWN ON CLICK \\
   $('.dropdown-toggle').click(function() {
     $('.dropdown-menu').toggle();
   });
 
-  // Hide dropdown menu when clicking elsewhere \\
+  // HIDE MENU DROPDOWN WHEN USER CLICKS ELSEWHERE \\
   $(document).click(function(e) {
     if (!$(e.target).is('.dropdown-toggle') && !$(e.target).parents().is('.dropdown-toggle')) {
       $('.dropdown-menu').hide();

@@ -8,20 +8,18 @@
   </head>`
   <style>
     body {
-      background-color: paleturquoise;
+      background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(175,238,224,0.6815764925373134) 50%, rgba(0,212,255,1) 100%);
     }
   </style>
 
-  
-  
+<!-- NAV BAR -->
 <nav class="navbar navbar-expand-md navbar-dark bg-primary">
     <div class="container">
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-  
       <a class="navbar-brand" href="/todoit/">To-Do It!</a>
-  
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
@@ -36,14 +34,9 @@
         </ul>
       </div>
     </div>
-  </nav>
-  
-  
-</div>
-
+  </nav>  
     
-      
-    
+  <!-- CALENDAR TABLE -->
     <div style="background-color: aliceblue; margin: 60px 80px 10px 80px">
       <div class="container-fluid" style="padding-bottom: 10px; border-style: solid; border-color: silver;">
         <h1 class="text-left my-5">My Calendar</h1>
@@ -60,7 +53,6 @@
             <table class="table table-bordered">
               <thead>
             <thead>
-        
             </thead>
             <tbody id="calendar-body">
             </tbody>
@@ -76,43 +68,22 @@
         </div>
       </div>
     </div>
- 
-    <script>
-    $(document).ready(function() {
-  // Toggle dropdown menu on click \\
-  $('.dropdown-toggle').click(function() {
-    $('.dropdown-menu').toggle();
-  });
-
-  // Hide dropdown menu when clicking elsewhere \\
-  $(document).click(function(e) {
-    if (!$(e.target).is('.dropdown-toggle') && !$(e.target).parents().is('.dropdown-toggle')) {
-      $('.dropdown-menu').hide();
-    }
-  });
-});
-    </script> 
    
-    <script>
-
+<!--CALENDAR GENERATOR THAT KEEPS TRACK OF CURRENT DATE, ALLOWS USER TO CYCLE THROUGH THE DAYS-->
+<script>
 $(() => {
   function generateCalendar(year, month, day) {
   // GET THE NUMBER OF DAYS IN A MONTH \\
   let numDays = new Date(year, month + 1, 0).getDate();
-
-  // Get the index of the first day of the month (0 for Sunday, 1 for Monday, etc.) \\
+  // MAKE INDEX OF EACH FIRST DAY OF TGHE MONTH \\
   let firstDayIndex = new Date(year, month, 1).getDay();
 
-  // Create an array of empty cells for the days before the first day of the month \\
+  // CREATE AN ARRAY OF CELLS FOR EACH DAY OF THE MONTH \\
   let emptyCells = Array(firstDayIndex).fill('');
-
-  // Create an array of cells for the days of the month \\
   let dayCells = Array.from({ length: numDays }, (_, i) => i + 1);
-
-  // Combine the arrays of empty cells and day cells into a single array \\
   let cells = [...emptyCells, ...dayCells];
 
-  // Create an array of rows, each containing 7 cells \\
+  // CREATE AN ARRAY OF ROWS, 7 FOR EACH DAY OF THE WEEK \\
   let rows = cells.reduce((acc, cell, i) => {
     if (i % 7 === 0) {
       acc.push([]);
@@ -121,12 +92,12 @@ $(() => {
     return acc;
   }, []);
 
-  // Render the rows \\
+  // RENDER EACH ROW \\
   let html = rows.map(row => {
     return `<tr>${row.map(cell => `<td><a href="/todoit/calendar/${year}-${month + 1}-${cell}/">${cell}</a></td>`).join('')}</tr>`;
   }).join('');
 
-  // Set the calendar body to html \\
+  // SET THE CALENDAR BODY AS HTML \\
   $('#calendar-body').html(html);
 
   // Format and set current-date/current-time \\
@@ -141,10 +112,8 @@ $(() => {
   hours = hours ? hours : 12; // the hour '0' should be '12'
   minutes = minutes < 10 ? '0' + minutes : minutes;
   let formattedTime = hours + ':' + minutes + ' ' + ampm;
-  $('#current-time').text(formattedTime);
-}
+  $('#current-time').text(formattedTime);}
 
-  
   // GENERATE THE CALENDAR WHEN THE PAGE LOADS \\
   let currentDate = new Date();
   generateCalendar(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
@@ -167,8 +136,22 @@ $(() => {
     generateCalendar(year, month, day);
   });
 });
-
-    </script>     
-    	
+</script>     
+  <!-- TOGGLE DROPDOWN MENU -->
+<script>
+  $(() => {
+    // TOGGLE MENU DROPDOWN ON CLICK \\
+    $('.dropdown-toggle').click(function() {
+      $('.dropdown-menu').toggle();
+    });
+  
+    // HIDE MENU DROPDOWN WHEN USER CLICKS ELSEWHERE \\
+    $(document).click(function(e) {
+      if (!$(e.target).is('.dropdown-toggle') && !$(e.target).parents().is('.dropdown-toggle')) {
+        $('.dropdown-menu').hide();
+      }
+    });
+  });
+  </script>  	
     </body>
 </html>
