@@ -1,7 +1,7 @@
 TO DO IT
 
 JEREMY KOLKER'S UNIT TWO RESTFUL FULLSTACK CRUD APP
-"TO-DO IT!" -- is a digital list-maker/organizer/calendar app. 
+"TO-DO IT!" is a digital list-maker/organizer/calendar app. 
 
 LANGUAGES FRAMEWORKS and DBs USED:
 Javascript (including jQuery & EJS), CSS Bootstrap, HTML, Node, Express, MongoDB.
